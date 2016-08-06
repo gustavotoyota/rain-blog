@@ -1,0 +1,45 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Django Blog - {{ post.title }}{% endblock %}
+
+{% block breadcrumb %}
+<div class="container">
+    <ul class="breadcrumb">
+        <li><a href="/">Blog</a></li>
+        <li class="active">{{ post.title }}</li>
+    </ul>
+</div>
+{% endblock %}
+
+{% block body %}
+    <div class="panel panel-default">
+        <div class="panel-heading">Post</div>
+        <div class="panel-body">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ post.title }}</div>
+                <div class="panel-body">{{ post.text }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Comments</div>
+        <div class="panel-body">
+            {% for comment in comments %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">{{ comment.author }}</div>
+                    <div class="panel-body">{{ comment.text }}</div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Post a comment</div>
+        <div class="panel-body">
+            <form method="post" class="post-form">
+                {% csrf_token %}
+                {{ comment_form.as_p }}
+                <button type="submit" class="save btn btn-default">Post comment</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
